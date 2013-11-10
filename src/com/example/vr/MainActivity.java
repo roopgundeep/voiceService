@@ -238,6 +238,11 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             		else if(part.equals("no")){
             			MainActivity.this.finish();
             		}
+            		else if(part.equals("danger")){
+            			sendDanger();
+            			ff=1;
+            			break;
+            		}
             		else{
             			if(ff==0)
             				sp("I don't know what you mean . Can I assest with anything else ?");
@@ -472,5 +477,18 @@ private class PhoneCallListener extends PhoneStateListener {
 	    String phoneNumber = "8886545470";
 	    SmsManager smsManager = SmsManager.getDefault();
 	    smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+	}
+	public void sendDanger() {
+		String message="In Danger,Please Help";
+	    String phoneNumber1 = "8886545470";
+	    String phoneNumber2 = "8886476758";
+	    String phoneNumber3 = "8886476759";
+	    
+	    SmsManager smsManager = SmsManager.getDefault();
+	    smsManager.sendTextMessage(phoneNumber1, null, message, null, null);
+	    SmsManager smsManager1 = SmsManager.getDefault();	  
+	    smsManager1.sendTextMessage(phoneNumber2, null, message, null, null);
+	    SmsManager smsManager2 = SmsManager.getDefault();
+	    smsManager2.sendTextMessage(phoneNumber3, null, message, null, null);
 	}
 }
