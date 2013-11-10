@@ -105,7 +105,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "at your command, Your Grace!");
         startActivityForResult(intent, REQUEST_CODE);
     }
     
@@ -138,70 +138,93 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             					ff=1;//call of bluetooth off
             					break;
             				}
-            			}
-            			if(ff==1)
-            				break;
+            			}            			
             			
             		}
-            		else if(part.equals("wifi")){
+            		else if(part.equals("wifi")){         
             			for(String part1: parts){            				
             				if(part1.equals("on")){
             					wifiOn();
+            					ff=1;
             					//sp("WIFI is ON");//call wifi On function
             					break;
             				}
             				else if(part1.equals("off")){
             					wifiOff();
             					//sp("WIFI is Off");//call of wifi off
+            					ff=1;
             					break;
             				}
-            			}
-            			if(ff==1)
-            				break;
+            			}            	
             			
             		}
             		else if(part.equals("silent")){
             			setSilent();
+            			ff=1;
+            			break;
             		}
             		else if(part.equals("vibrate")){
-            			setVibrate();        			
+            			setVibrate();
+            			ff=1;
+            			break;
             		}
             		else if(part.equals("ring")){
-            			setRinging(); 
+            			setRinging();
+            			ff=1;
+            			break;
             		}
             		else if(part.equals("camera")){
-            			camera(); 
+            			camera();
+            			ff=1;
+            			break;
             		}
             		else if(part.equals("pause")){
-            			controlMusic("pause"); 
+            			controlMusic("pause");
+            			ff=1;
+            			break;
             		}
             		else if(part.equals("next")){
-            			controlMusic("next"); 
+            			controlMusic("next");
+            			ff=1;
+            			break;
             		}
             		else if(part.equals("previous")){
             			controlMusic("previous"); 
             			controlMusic("previous"); 
-            			
+            			ff=1;
+            			break;
             		}
             		else if(part.equals("stop")){
-            			controlMusic("stop"); 
+            			controlMusic("stop");
+            			ff=1;
+            			break;
             		}
             		else if(part.equals("play")){
-            			controlMusic("play"); 
+            			controlMusic("play");
+            			ff=1;
+            			break;
             		}
             		else if(part.equals("call")){
-            			make_call(); 
+            			make_call();
+            			ff=1;
+            			break;
             		}
-            		else if(part.equals("message")){
+            		else if(part.equals("message") || part.equals("send")){
             			String[] part11 = s.split("saying");
             			Log.i(part11[0],part11[1]);
-            			sendSMS(part11[1]); 
+            			sendSMS(part11[1]);
+            			ff=1;
+            			sp("Message Sent");
+            			break;
+            			
             		}
-            		else if(part.equals("google")){
+            		else if(part.equals("google")|| part.equals("search")){
             			String[] part11 = s.split("for");
             			Intent intent = new Intent(this,WebViewActivity.class);
             			intent.putExtra("message", part11[1]);
             			startActivity(intent);
+            			ff=1;
+            			break;
             		}
             		else if(part.equals("wait")){
             			try {
@@ -216,7 +239,8 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
             			MainActivity.this.finish();
             		}
             		else{
-            			sp("I don't know what you mean . Can I assest with anything else ?");
+            			if(ff==0)
+            				sp("I don't know what you mean . Can I assest with anything else ?");
             		}
 
             	}
@@ -439,7 +463,7 @@ private class PhoneCallListener extends PhoneStateListener {
 		if(status == TextToSpeech.SUCCESS) {
             mText2Speech.setLanguage(Locale.getDefault());
         }
-		String speakText="How Can I help you";
+		String speakText="How Can I help Your Grace ?";
 		if(flag==0)
 			mText2Speech.speak(speakText, TextToSpeech.QUEUE_FLUSH, null);
 			flag=1;		
